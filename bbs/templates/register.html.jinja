@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/css/mdui.min.css" />
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/login.css') }}>
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/base.css') }}>
+    <!--<link rel="shortcut icon" href="../img/icon.png">-->
+</head>
+
+<body class="mdui-theme-accent-blue">
+    <noscript>
+        <div class="alert-js">
+            <p>啊哦，<code> JavaScript </code>似乎无法正常使用。请尝试打开<code> JavaScript </code>以获得最佳体验！</p>
+        </div>
+    </noscript>
+
+    <div class="main mdui-valign">
+        <form class="form mdui-center" method="post">
+            <!-- Title -->
+            <h1 class="mdui-text-center">注册</h1>
+            <!-- Username -->
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">&#xe853;</i>
+                <label class="mdui-textfield-label">用户名</label>
+                <input class="mdui-textfield-input" type="text" name='username' />
+            </div>
+            <br />
+            <!-- Password -->
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">&#xe897;</i>
+                <label class="mdui-textfield-label">密码</label>
+                <input class="mdui-textfield-input" type="password" name='password' />
+            </div>
+
+            <br />
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">&#xe897;</i>
+                <label class="mdui-textfield-label">确认密码</label>
+                <input class="mdui-textfield-input" type="password" name='confirm-password' />
+            </div>
+            <br />
+            &nbsp;&nbsp;
+            <label class="mdui-checkbox">
+                <input type="checkbox" name='agree' />
+                <i class="mdui-checkbox-icon mdui-theme-accent-blue"></i>
+                我已阅读并同意《用户须知》
+            </label>
+            <br />
+            <br />
+            {% for message in get_flashed_messages() %}
+               <div class="alert">{{ message }}</div>
+            {% endfor %}
+            <!-- Login Button -->
+            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-center">注册</button>
+
+            <br />
+            <br />
+            <!-- Register -->
+            <div class="mdui-typo">
+                <p class="mdui-text-center">已有账号？<a href={{ url_for('login') }}> 点击此处 </a> 进行登录。</p>
+            </div>
+        </div>
+    </div>
+    <!-- MDUI JavaScript -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+
+    <!--<script src="../js/login.js"></script>-->
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/css/mdui.min.css" />
+    <title>Login</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/login.css') }}>
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/base.css') }}>
+</head>
+
+<body class="mdui-theme-accent-blue">
+    <noscript>
+        <div class="alert-js">
+            <p>啊哦，<code> JavaScript </code>似乎无法正常使用。请尝试打开<code> JavaScript </code>以获得最佳体验！</p>
+        </div>
+    </noscript>
+    <!-- App Bar -->
+
+    <div class="main mdui-valign">
+
+        <form class="form mdui-center" method="post">
+            <!-- Title -->
+            <h1 class="mdui-text-center">登录</h1>
+                <!-- Username -->
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <i class="mdui-icon material-icons">&#xe853;</i>
+                    <label class="mdui-textfield-label">用户名</label>
+                    <input class="mdui-textfield-input" type="text" name='username' />
+
+                </div>
+                <br />
+                <!-- Password -->
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <i class="mdui-icon material-icons">&#xe897;</i>
+                    <label class="mdui-textfield-label">密码</label>
+                    <input class="mdui-textfield-input" type="password" name="password" />
+                </div>
+
+                <br /><br />
+                {% for message in get_flashed_messages() %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+                <!-- Login Button -->
+                <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-center">登录</button>
+
+                <br />
+                <br />
+                <!-- Register -->
+                <div class="mdui-typo">
+                    <p class="mdui-text-center">没有账号？<a href={{ url_for('register') }}> 点击此处 </a> 进行注册。</p>
+                </div>
+        </form>
+    </div>
+
+    <!--<script src="../js/login.js"></script>-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+</body>
+
+</html>

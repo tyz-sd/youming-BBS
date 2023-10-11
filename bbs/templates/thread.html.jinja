@@ -1,0 +1,85 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+    <title>{{ board.name }}</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/page.css') }} media="screen" type="text/css">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/base.css') }} media="screen" type="text/css">
+{% endblock %}
+
+{% block header %}
+    <span class="mdui-typo-title"> {{board.name}} </span>
+    {# <button class="mc-icon-button mdui-btn mdui-btn-icon" mdui-tooltip="{content: '收藏', delay: 300}">
+        <i class="mdui-icon material-icons mdui-text-color-theme-icon">star_border</i>
+    </button> #}
+{% endblock header %}
+
+{% block content %}
+    <!-- 帖子内容 -->
+    <div class="mdui-container">
+        <!-- 返回主页 -->
+        <div class="nav">
+            <a class="back mdui-btn mdui-ripple" href={{ url_for('index') }}>
+                <i class="mdui-icon mdui-icon-left material-icons">arrow_back</i>
+                返回主页
+            </a>
+        </div>
+
+        <div class="sheet-list mdui-card mdui-shadow-1">
+            <ul class="mdui-list">
+            {% for thread in threads %}
+              <a href={{ url_for('post_read', bid=board.id, threadid=thread.id) }}>
+              <li class="mdui-list-item mdui-ripple">
+                <div class="mdui-list-item-avatar">
+                  <img src="{{ url_for('static', filename=thread.author.avatar) }}" />
+                </div>
+                <div class="mdui-list-item-content">
+                  <div class="mdui-list-item-one-line">
+                    <div class="mdui-list-item-title">{{ thread.title }}</div>
+                    <div class="subtitle">{{ thread.time }}</div>
+                  </div>
+                  <div class="mdui-list-item-one-line">
+                    <div class="mdui-list-item-text">{{ thread.content }}</div>
+                    <div class="subtitle">{{ thread["post-count"] }}个回答</div>
+                  </div>
+                </div>
+              </li>
+              </a>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    {% if board.id != 'recent-ten' and board.id != 'top-ten' and board.id != 'favorate' %}
+    <button class="mdui-btn mdui-fab mdui-fab-fixed mdui-ripple" mdui-dialog="{target: '#example-4'}">
+        <i class="mdui-icon material-icons" id="add_tab">add</i>
+    </button>
+    {% endif %}
+    <div class="mdui-dialog" id="example-4">
+        <div class="header">
+            <div class="header-title">发帖子</div>
+            <div class="mdui-dialog-actions">
+                <i class="mdui-icon material-icons close_dialog" mdui-dialog-close title="保存为草稿并关闭">close</i>
+            </div>
+        </div>
+        <div class="body">
+            <form action={{url_for('add_thread')}} method="post">
+                <textarea class="editor-content" rows="1" name="topic" placeholder="主题"></textarea>
+                <hr />
+                <textarea class="editor-content" rows="16" name="content" placeholder="内容"></textarea>
+                <textarea class="hidden" rows='1' name='bid'>{{board.id}}</textarea>
+                <div class="editor-toolbar">
+                    <button class="submit mdui-btn mdui-btn-raised mdui-color-theme">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    var tab = new mdui.Tab('#add-tab');
+    $('example-4').addEventListener('open.mdui.dialog', function () {
+      tab.handleUpdate();
+    });
+{% endblock script %}

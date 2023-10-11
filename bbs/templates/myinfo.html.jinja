@@ -1,0 +1,150 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href={{ url_for('static', filename='css/homepage.css') }} media="screen" type="text/css">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/myinfo.css') }} media="screen" type="text/css">
+    <title>个人资料</title>
+{% endblock head %}
+
+{% block header %}
+    <span class="mdui-typo-title">个人资料</span>
+{% endblock header %}
+
+{% block content %}
+    <!-- 个人资料 -->
+    <div class="mdui-container">
+        <div class="mdui-card mdui-shadow-2 info-content">
+
+            <div style="position: relative; margin-bottom: 30px;">
+                <img class="headimg" src="{{url_for('static', filename=current_user.avatar)}}" />
+                <span class="name"> {{current_user.nickname}} <br><small>ID:{{ current_user.name }}</small></span>
+                <button class="changeinfo btn" mdui-dialog="{target: '#changemyinfo'}">修改资料</button>
+                <button class="changeinfo2 btn" mdui-dialog="{target: '#changepassword'}">修改头像</button>
+            </div>
+
+            <div class="mdui-tab mdui-tab-full-width" mdui-tab>
+                <a href="#example4-tab1" class="mdui-ripple">个人信息</a>
+                {# <a href="#example4-tab2" class="mdui-ripple">历史浏览</a> #}
+                <a href="#example4-tab3" class="mdui-ripple">发帖纪录</a>
+            </div>
+            <div id="example4-tab1" class="info">
+                <div class="item"><span class="item-left">昵称：</span><span> {{ current_user.nickname or '' }}</span></div>
+                <div class="item"><span class="item-left">性别：</span><span> {{ current_user.gender or '' }} </span></div>
+                <div class="item"><span class="item-left">年龄：</span><span> {{current_user.age or ''}} </span></div>
+                <div class="item"><span class="item-left">电话：</span><span>{{current_user.phone_num or ''}}</span></div>
+                <div class="item"><span class="item-left">email：</span><span>{{current_user.email or ''}}</span></div>
+                <div class="item"><span class="item-left">学校信息：</span><span></span>{{current_user.school or ''}}</div>
+                {# <div class="item item1"><span class="item-left">个人签名：</span><span>无论走到哪里，都应该记住，过去都是假的。</span></div> #}
+            </div>
+            {# <div id="example4-tab2" class="past-view">
+                <div class="sheet-list mdui-card mdui-shadow-0">
+                    <ul class="mdui-list">
+                        <a href="./page.html">
+                            <li class="mdui-list-item mdui-ripple">
+                                <div class="mdui-list-item-avatar">
+                                    <img src="../images/avatar.jpeg" />
+                                </div>
+                                <div class="mdui-list-item-content">
+                                    <div class="mdui-list-item-one-line">
+                                        <div class="mdui-list-item-title">张哥牛逼</div>
+                                        <div class="subtitle">2022-05-06</div>
+                                    </div>
+                                    <div class="mdui-list-item-one-line">
+                                        <div class="mdui-list-item-text">他真的好牛逼</div>
+                                        <div class="subtitle">3个回答</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div> #}
+            <div id="example4-tab3" class="past-post">
+                <div class="sheet-list mdui-card mdui-shadow-0">
+                    <ul class="mdui-list">
+                        {% for thread in posted_threads %}
+                        <a href={{url_for('post_read', bid=thread.bid, threadid=thread.id)}}>
+                            <li class="mdui-list-item mdui-ripple">
+                                <div class="mdui-list-item-avatar">
+                                    <img src={{url_for('static', filename=thread.author.avatar)}} />
+                                </div>
+                                <div class="mdui-list-item-content">
+                                    <div class="mdui-list-item-one-line">
+                                        <div class="mdui-list-item-title">{{thread.title}}</div>
+                                        <div class="subtitle">{{thread.time}}</div>
+                                    </div>
+                                    <div class="mdui-list-item-one-line">
+                                        <div class="mdui-list-item-text">{{thread.content}}</div>
+                                        <div class="subtitle">{{thread['post-count']}}个回答</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改个人资料 -->
+    <div class="mdui-dialog" id="changemyinfo">
+        <div class="mdui-dialog-content">
+            <div class="mdui-dialog-title">修改个人资料</div>
+            <form action={{ url_for('update_myinfo') }} method="post">
+                <p><label class="mdui-textfield-label">昵称</label>
+                    <input class="mdui-textfield-input" type="text" name="myname" value="{{current_user.nickname}}" />
+                </p>
+                <p><label class="mdui-textfield-label">性别</label>
+                    <label class="mdui-radio">
+                        <input type="radio" name="gender" value='男' />
+                        <i class="mdui-radio-icon"></i>
+                        男
+                    </label>
+                    <label class="mdui-radio">
+                        <input type="radio" name="gender" value='女' checked />
+                        <!--当前的性别为默认已选-->
+                        <i class="mdui-radio-icon"></i>
+                        女
+                    </label>
+                </p>
+                <p><label class="mdui-textfield-label">年龄</label>
+                    <input class="mdui-textfield-input" type="text" name="age" value="{{current_user.age or ''}}" />
+                </p>
+                <p><label class="mdui-textfield-label">电话</label>
+                    <input class="mdui-textfield-input" type="text" name="phone" value="{{current_user.phone_num or ''}}" />
+                </p>
+                <p><label class="mdui-textfield-label">email</label>
+                    <input class="mdui-textfield-input" type="text" name="email" value="{{current_user.email or ''}}" />
+                </p>
+                <p><label class="mdui-textfield-label">学校信息</label>
+                    <input class="mdui-textfield-input" type="text" name="school" value="{{current_user.school or ''}}" />
+                </p>
+                {# <p><label class="mdui-textfield-label">个人签名</label>
+                    <input class="mdui-textfield-input" type="text" name="sign" value="无论走到哪里，都应该记住，过去都是假的。" />
+                </p> #}
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" type="submit">提交修改</button>
+                    <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 修改密码 -->
+    <div class="mdui-dialog" id="changepassword">
+        <div class="mdui-dialog-content">
+            <div class="mdui-dialog-title">修改头像</div>
+            <form enctype=multipart/form-data action={{url_for('update_avatar')}} method="post">
+                <p><label class="mdui-textfield-label">请上传图片</label>
+                    <input class="mdui-textfield-input" type="file" name="newAvatar" accept="image/png, image/bmp, image/jpeg, image/gif, image/jpg" />
+                </p>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" type="submit">提交</button>
+                    <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

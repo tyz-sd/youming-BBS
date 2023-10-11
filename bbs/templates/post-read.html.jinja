@@ -1,0 +1,162 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+    <title>{{ thread.title }}</title>
+    <link rel="stylesheet" href= {{ url_for('static', filename='css/page.css') }} media="screen" type="text/css">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/base.css') }} media="screen" type="text/css">
+{% endblock %}
+
+{% block header %}
+    <span class="mdui-typo-title"> {{thread.title}} </span>
+{% endblock header %}
+
+{% block content %}
+    <!-- 帖子内容 -->
+    <div class="mdui-container">
+        <!-- 返回版面 -->
+        <div class="nav">
+            <a class="back mdui-btn mdui-ripple" href={{ url_for('thread', bid=board.id) }}>
+                <i class="mdui-icon mdui-icon-left material-icons">arrow_back</i>
+                返回版面
+            </a>
+        </div>
+
+        <div class="question mdui-card mdui-shadow-1">
+            <!-- 卡片的标题 -->
+            <div class="mdui-card-primary">
+                <div class="mdui-card-primary-title"> {{ thread.title }} </div>
+            </div>
+
+            <div class="mdui-card-header">
+                <img class="mdui-card-header-avatar" src="{{ url_for('static', filename=thread.author.avatar) }}" />
+                <div class="mdui-card-header-title"> {{ thread.author.nickname }}
+                </div>
+                <div class="mdui-card-header-subtitle"> {{ thread.time }} </div>
+            </div>
+
+
+            <div class="mdui-card-content"> {{ thread.content }} </div>
+
+            <!-- 卡片的按钮 -->
+            <div class="mdui-card-actions">
+                <a href={{url_for('like', bid=board.id, threadid=thread.id, postid=thread.id, like=1)}}>
+                <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button 
+                    {% if thread.liked_by_user %} active {% endif %}"
+                    mdui-tooltip="{content: '顶一下', delay: 200}">
+                    <span class="badge">{{thread.like}}</span>
+                    <i class="mdui-icon material-icons mdui-text-color-theme-icon">&#xe8dc;</i>
+                </button>
+                </a>
+                <a href={{url_for('like', bid=board.id, threadid=thread.id, postid=thread.id, like=-1)}}>
+                <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button
+                    {% if thread.disliked_by_user %} active {% endif %}"
+                    mdui-tooltip="{content: '踩一下', delay: 200}">
+                    <span class="badge">{{thread.dislike}}</span>
+                    <i class="mdui-icon material-icons mdui-text-color-theme-icon">thumb_down</i>
+                </button>
+                </a>
+                <a href={{url_for('add_favorate', bid=board.id, threadid=thread.id)}}>
+                <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button {% if thread.favorate %}active{% endif %}"
+                    mdui-tooltip="{content: '收藏', delay: 200}">
+                    {% if thread.favorate %}
+                    <i class="mdui-icon material-icons mdui-text-color-theme-icon">star</i>
+                    {% else %}
+                    <i class="mdui-icon material-icons mdui-text-color-theme-icon">star_border</i>
+                    {% endif %}
+                </button>
+                </a>
+                <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button"
+                    mdui-dialog="{target: '#example-4'}" mdui-tooltip="{content: '回复这条', delay: 200}"
+                    onclick="document.getElementById('refernce_id').value = {{thread.id}};">
+                    <i class="mdui-icon material-icons mdui-text-color-theme-icon" id="add_tab">comment</i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 回复 -->
+        <div class="answer">
+            <div class="title">共 <span id="answer-num"> {{ thread["post-count"] }} </span> 个回复 </div>
+            <div class="mdui-card">
+                {% for comment in comments %}
+                <div class="item">
+                    <div class="mdui-card-header">
+                        <img class="mdui-card-header-avatar" src= "{{ url_for('static', filename=comment.author.avatar) }}" />
+                        <div class="mdui-card-header-title"> {{ comment.author.nickname }}
+                        </div>
+                        <div class="mdui-card-header-subtitle"> {{ comment.time }} </div>
+                    </div>
+                    <div class="mdui-card-content"> {{ comment.content }} </div>
+                    {% if comment.target_content %}
+                    <div class="mdui-typo">
+                        <blockquote>
+                            <p> {{comment.target_content}} </p>
+                        </blockquote>
+                    </div>
+                    {% endif %}
+
+                    <div class="mdui-card-actions">
+                        <a href={{url_for('like', bid=board.id, threadid=thread.id, postid=comment.id, like=1)}}>
+                        <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button
+                            {% if comment.liked_by_user %} active {% endif %}"
+                            mdui-tooltip="{content: '顶一下', delay: 200}">
+                            <span class="badge">{{comment.like}}</span>
+                            <i class="mdui-icon material-icons mdui-text-color-theme-icon">&#xe8dc;</i>
+                        </button>
+                        </a>
+                        <a href={{url_for('like', bid=board.id, threadid=thread.id, postid=comment.id, like=-1)}}>
+                        <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button
+                            {% if comment.disliked_by_user %} active {% endif %}""
+                            mdui-tooltip="{content: '踩一下', delay: 200}">
+                            <span class="badge">{{comment.dislike}}</span>
+                            <i class="mdui-icon material-icons mdui-text-color-theme-icon">thumb_down</i>
+                        </button>
+                        </a>
+                        <button class="mc-icon-button mdui-btn mdui-btn-icon mdui-btn-outlined click-button"
+                            mdui-dialog="{target: '#example-4'}" mdui-tooltip="{content: '回复这条', delay: 200}"
+                            onclick="document.getElementById('reference_id').value = {{comment.id}};">
+                            <i class="mdui-icon material-icons mdui-text-color-theme-icon" id="add_tab">comment</i>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="example-4">
+        <div class="header">
+            <div class="header-title">回复</div>
+            <div class="mdui-dialog-actions">
+                <i class="mdui-icon material-icons close_dialog" mdui-dialog-close title="保存为草稿并关闭">close</i>
+            </div>
+        </div>
+        <div class="body">
+            <form action={{url_for('add_comment')}} method="post">
+                <textarea class="editor-content" rows="16" name="content"></textarea>
+                <div class="editor-toolbar">
+                    <button class="submit mdui-btn mdui-btn-raised mdui-color-theme">发布</button>
+                </div>
+                <textarea class="hidden" rows='1' name='bid'>{{board.id}}</textarea>
+                <textarea class="hidden" rows='1' name='threadid'>{{thread.id}}</textarea>
+                <textarea class="hidden" rows='1' name='reference_id' id='reference_id'>{{thread.id}}</textarea>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    {{ super() }}
+    let cbtn = document.getElementsByClassName("click-button");
+    let i;
+    for (i = 0; i < cbtn.length; i++) {
+        cbtn[i].addEventListener('click', function () {
+            if ($(this).hasClass("active")) {
+                $(this).removeClass("active");
+            }
+            else {
+                $(this).addClass("active");
+            }
+        });
+    }
+{% endblock %}

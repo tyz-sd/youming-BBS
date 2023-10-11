@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.mdui-color-theme {
+    color: rgb(255, 255, 255);
+    background-color: rgb(98, 186, 186);
+}
+
+.wrapper {
+    display: flex;
+}
+
+.mdui-toolbar {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 64px;
+    box-shadow: 10px 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.mdui-list {
+    width: 100%;
+}
+
+.mdui-list-item {
+    padding-left: 25px;
+}
+
+.items {
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.subarea {
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    width: 50%;
+    margin-bottom: 24px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.subarea .mdui-card {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-top: #ff8a04 solid 2px;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: none;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: auto;
+    max-width: 722px;
+    height: 46px;
+    margin-left: 30px;
+    background-color: #f1f3f4;
+    border-radius: 8px;
+    transition-duration: .18s;
+}
+
+.search-bar input {
+    flex: 1;
+    height: 46px;
+    padding: 0 1px 0 2px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.search-button {
+    height: 36px;
+    width: 36px;
+    margin: 0 5px 0 5px;
+}
+
+.mdui-text-color-theme-icon {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.mdui-drawer-open {
+    display: flex;
+}
+
+/* 内容的样式 */
+.mdui-container {
+    width: 80%;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.info-content {
+    border-top: #ff8a04 solid 3px;
+    padding: 30px 40px;
+    min-height: 400px;
+}
+
+.headline {
+    vertical-align: middle;
+}
+
+.headimg {
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    vertical-align: middle;
+}
+
+.name {
+    display: inline-block;
+    margin-left: 25px;
+    height: 50px;
+    line-height: 25px;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+small {
+    font-size: 16px;
+    color: grey;
+}
+
+.changeinfo {
+    position: absolute;
+    right: 85px;
+    top: 30px;
+}
+.changeinfo2 {
+    position: absolute;
+    right: 0px;
+    top: 30px;
+}
+/* 按钮设置 */
+.btn {
+    width: 80px;
+    height: 33px;
+    background-color: rgb(109, 214, 214);
+    border: 0;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgb(90, 186, 186);
+}
+/* 基本信息 */
+.info {
+    font-size: 14px;
+    margin: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+.item {
+    width: 250px;line-height: 40px;
+}
+.item1{
+    width:100%;
+}
+.item-left{
+    color:grey;
+}
+
+/* 历史浏览 */
+.past-view,.past-post{
+    margin:30px;
+}
+.subtitle{
+    font-size: 13px;
+    color: rgb(189, 189, 189);
+}
+.mdui-list-item-one-line{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+ul.mdui-list{
+    margin:0;
+    padding: 0;
+}
+.sheet-list {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    /*border-radius: 8px;*/
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.sheet-list li:hover{
+    border-left: #ff8a04 solid 2px;;
+}
+
+/* 修改资料dialog */
+form p{
+    margin:15px 0;
+}
+
+.mdui-dialog-content{
+    padding: 45px;
+}
+.mdui-dialog-title{
+    padding-bottom: 15px !important;
+}
+.mdui-dialog-actions .mdui-btn{
+    font-size: 15px;
+}
+label{
+    width:100px;
+}

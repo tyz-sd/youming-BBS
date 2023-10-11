@@ -1,0 +1,40 @@
+body {
+    /* background-image:url(https://www.yangshangzhen.com/bing/wallpaper);*/
+    background-image: linear-gradient(75deg, #d8d7d7 0%, #ffffff 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.form {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    width: 40%;
+    height: 50%;
+    border-radius: 30px;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    position: absolute;
+}
+
+.input-un {
+    width: 200px;
+    margin: 0 auto;
+}
+@font-face {
+    font-family: 'Code';
+    src: url('https://cdn.jsdelivr.net/gh/z-cdn/Font@5d081c5/Code/SourceCodeVariable-Italic.ttf');
+}
+
+.alert-js {
+    background-color: #FFFF9D;
+    text-align: center;
+}
+
+code {
+    font-family: Code;
+}

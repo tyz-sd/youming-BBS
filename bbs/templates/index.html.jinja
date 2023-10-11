@@ -1,0 +1,56 @@
+{% extends "base.html.jinja" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href= {{ url_for('static', filename='css/homepage.css') }} media="screen" type="text/css">
+    <title>北大有名BBS</title>
+{% endblock %}
+
+{% block header %}
+    <span class="mdui-typo-title">北大🈶名BBS</span>
+{% endblock header %}
+
+{% block content %}
+    <div class="items">
+        <div class="subarea">
+            <div class="mdui-card">
+                <a class="mdui-btn header mdui-ripple" href={{ url_for('top_ten') }} >
+                    全站十大
+                    <i class="mdui-icon material-icons mdui-text-color-theme">arrow_forward</i>
+                </a>
+                <div class="mdui-card-actions mdui-card-actions-stacked">
+                    {% for thread in top10 %}
+                    <button class="mdui-btn mdui-ripple homepage-entry" onclick="location.href='{{ url_for('post_read', bid=thread.bid, threadid=thread.id) }}'"> {{ thread.title }} </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="subarea">
+            <div class="mdui-card">
+                <a class="mdui-btn header mdui-ripple" href={{ url_for('recent_ten') }}>
+                    最新帖子
+                    <i class="mdui-icon material-icons mdui-text-color-theme">arrow_forward</i>
+                </a>
+                <div class="mdui-card-actions mdui-card-actions-stacked">
+                    {% for thread in recent10 %}
+                    <button class="mdui-btn mdui-ripple homepage-entry" onclick="location.href='{{ url_for('post_read', bid=thread.bid, threadid=thread.id) }}'"> {{ thread.title }} </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="subarea">
+            <div class="mdui-card">
+                <a class="mdui-btn header mdui-ripple">
+                    全部版面
+                    <i class="mdui-icon material-icons mdui-text-color-theme">arrow_forward</i>
+                </a>
+
+                <div class="mdui-card-actions mdui-card-actions-stacked">
+                    {% for board in boards %}
+                    <button class="mdui-btn mdui-ripple homepage-entry" onclick="location.href='{{ url_for('thread', bid=board.id) }}'"> {{ board.name }} </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
